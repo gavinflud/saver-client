@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "../header/";
+import MainModal from "../main-modal/";
 import "./app.css";
 import "bulma/css/bulma.css";
 
@@ -9,10 +10,6 @@ import "bulma/css/bulma.css";
  * @param {Object} props Properties passed from the calling component
  */
 const App = props => {
-  const mainModalClass = props.isMainModalActive
-    ? "gf-main-modal modal is-active"
-    : "gf-main-modal modal";
-
   return (
     <div className="gf-app">
       <div className="gf-header-container section">
@@ -21,15 +18,12 @@ const App = props => {
         </div>
       </div>
 
-      <div className={mainModalClass}>
-        <div className="modal-background"></div>
-        <div className="modal-content"></div>
-        <button
-          className="modal-close is-large"
-          aria-label="close"
-          onClick={props.functions.toggleMainModal}
-        ></button>
-      </div>
+      <MainModal
+        loginForm={props.components.loginForm}
+        registerForm={props.components.registerForm}
+        isActive={props.components.mainModal.visible}
+        toggleMainModal={props.functions.toggleMainModal}
+      />
     </div>
   );
 };

@@ -8,10 +8,9 @@ export default class AppContainer extends React.Component {
   state = {
     user: null,
 
-    isMainModalActive: false,
-
     // This should house any data needed to show specific components
     components: {
+      mainModal: { visible: false },
       loginForm: { visible: false },
       registerForm: { visible: false }
     }
@@ -23,7 +22,12 @@ export default class AppContainer extends React.Component {
   toggleMainModal = () => {
     return new Promise(resolve =>
       this.setState(
-        { isMainModalActive: !this.state.isMainModalActive },
+        prevState => ({
+          components: {
+            ...prevState.components,
+            mainModal: { visible: !prevState.components.mainModal.visible }
+          }
+        }),
         resolve
       )
     );
@@ -74,6 +78,7 @@ export default class AppContainer extends React.Component {
       <App
         user={this.state.user}
         functions={this.functions}
+        components={this.state.components}
         isMainModalActive={this.state.isMainModalActive}
       />
     );
