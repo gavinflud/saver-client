@@ -1,1 +1,1 @@
-export { default } from "./login-form-view";
+export { default } from "./login-form-container";

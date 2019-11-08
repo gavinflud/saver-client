@@ -23,6 +23,8 @@ const App = props => {
         registerForm={props.components.registerForm}
         isActive={props.components.mainModal.visible}
         toggleMainModal={props.functions.toggleMainModal}
+        handleLogin={props.functions.handleLogin}
+        handleRegister={props.functions.handleRegister}
       />
     </div>
   );

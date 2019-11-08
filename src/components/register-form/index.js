@@ -1,1 +1,1 @@
-export { default } from "./register-form-view";
+export { default } from "./register-form-container";
