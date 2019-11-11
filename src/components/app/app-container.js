@@ -48,20 +48,24 @@ export default class AppContainer extends React.Component {
    * and store that in the component state.
    */
   setCurrentUser = () => {
-    return sendRequest(
-      RequestType.GET,
-      "users/current",
-      this.state.authorizationToken
-    )
-      .then(
-        response =>
-          new Promise(resolve =>
-            this.setState({ user: response.data }, resolve)
-          )
+    if (this.state.authorizationToken) {
+      return sendRequest(
+        RequestType.GET,
+        "users/current",
+        this.state.authorizationToken
       )
-      .catch(
-        () => new Promise(resolve => this.setState({ user: null }, resolve))
-      );
+        .then(
+          response =>
+            new Promise(resolve =>
+              this.setState({ user: response.data }, resolve)
+            )
+        )
+        .catch(error => {
+          if (error.response.data.validationErrors.authorizationToken) {
+            return this.logoutCurrentUser();
+          }
+        });
+    }
   };
 
   /**
@@ -69,10 +73,9 @@ export default class AppContainer extends React.Component {
    */
   logoutCurrentUser = () => {
     this.cookies.remove("authorizationToken");
-    this.setState({
-      user: null,
-      authorizationToken: null
-    });
+    return new Promise(resolve =>
+      this.setState({ user: null, authorizationToken: null }, resolve)
+    );
   };
 
   /**
