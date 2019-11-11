@@ -10,6 +10,14 @@ import "bulma/css/bulma.css";
  * @param {Object} props Properties passed from the calling component
  */
 const App = props => {
+  const mainModalFunctions = {
+    handleLogin: props.functions.handleLogin,
+    handleRegister: props.functions.handleRegister,
+    toggleMainModal: props.functions.toggleMainModal,
+    setAuthorizationToken: props.functions.setAuthorizationToken,
+    setCurrentUser: props.functions.setCurrentUser
+  };
+
   return (
     <div className="gf-app">
       <div className="gf-header-container section">
@@ -22,9 +30,8 @@ const App = props => {
         loginForm={props.components.loginForm}
         registerForm={props.components.registerForm}
         isActive={props.components.mainModal.visible}
-        toggleMainModal={props.functions.toggleMainModal}
-        handleLogin={props.functions.handleLogin}
-        handleRegister={props.functions.handleRegister}
+        functions={mainModalFunctions}
+        authorizationToken={props.authorizationToken}
       />
     </div>
   );

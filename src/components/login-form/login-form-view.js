@@ -15,6 +15,7 @@ const LoginForm = props => {
               type="text"
               name="username"
               value={props.user.username}
+              onChange={props.functions.handleInputChange}
             />
           </div>
         </div>
@@ -27,20 +28,24 @@ const LoginForm = props => {
               type="password"
               name="password"
               value={props.user.password}
+              onChange={props.functions.handleInputChange}
             />
           </div>
         </div>
 
         <div className="field is-grouped">
           <div className="control">
-            <button className="button is-link" onClick={props.handleLogin}>
+            <button
+              className="button is-link"
+              onClick={props.functions.submitForm}
+            >
               Login
             </button>
           </div>
           <div className="control">
             <button
               className="button is-link is-light"
-              onClick={props.closeForm}
+              onClick={props.functions.closeForm}
             >
               Cancel
             </button>

@@ -2,14 +2,34 @@ import React from "react";
 import LoginForm from "../login-form/";
 import RegisterForm from "../register-form/";
 
+/**
+ * Return the login form view.
+ *
+ * @param {Object} props Properties passed from the calling component
+ */
 const loginFormComponent = props => {
-  return <LoginForm closeForm={props.toggleMainModal} />;
+  return (
+    <LoginForm
+      functions={props.functions}
+      authorizationToken={props.authorizationToken}
+    />
+  );
 };
 
+/**
+ * Return the register form view.
+ *
+ * @param {Object} props Properties passed from the calling component
+ */
 const registerFormComponent = props => {
-  return <RegisterForm closeForm={props.toggleMainModal} />;
+  return <RegisterForm closeForm={props.functions.toggleMainModal} />;
 };
 
+/**
+ * Return the correct modal to show.
+ *
+ * @param {Object} props Properties passed from the calling component
+ */
 const getModal = props => {
   if (props.loginForm.visible) {
     return {
@@ -24,6 +44,11 @@ const getModal = props => {
   }
 };
 
+/**
+ * The main modal for the app. When active, it overlays everything on-screen.
+ *
+ * @param {Object} props Properties passed from the calling component
+ */
 const MainModal = props => {
   const modalClass = props.isActive
     ? "gf-main-modal modal is-active"
@@ -39,7 +64,7 @@ const MainModal = props => {
           <button
             className="delete"
             aria-label="close"
-            onClick={props.toggleMainModal}
+            onClick={props.functions.toggleMainModal}
           ></button>
         </header>
         <section className="modal-card-body">{modal.component}</section>

@@ -1,7 +1,10 @@
 import React from "react";
 import RegisterForm from "./register-form-view";
-import Utils from "../../utils/";
+import { sendRequest, RequestType } from "../../utils/";
 
+/**
+ * Container for the register form view.
+ */
 class RegisterFormContainer extends React.Component {
   /**
    * Constructor.
@@ -45,7 +48,7 @@ class RegisterFormContainer extends React.Component {
       }
     };
 
-    Utils.sendRequest(Utils.RequestType.POST, "users", null, user)
+    sendRequest(RequestType.POST, "users", null, user)
       .then(response => console.log(response))
       .then(() => this.props.closeForm());
   };
@@ -77,6 +80,7 @@ class RegisterFormContainer extends React.Component {
     });
   };
 
+  // Functions needed by the register form view
   functions = {
     closeForm: this.closeForm,
     submitForm: this.submitForm,

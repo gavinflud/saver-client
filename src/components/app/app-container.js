@@ -1,19 +1,78 @@
 import React from "react";
 import App from "./app-view";
+import Cookies from "universal-cookie";
+import { sendRequest, RequestType } from "../../utils/";
 
 /**
  * Container for the app view.
  */
 export default class AppContainer extends React.Component {
-  state = {
-    user: null,
+  constructor(props) {
+    super(props);
+    this.cookies = new Cookies();
 
-    // This should house any data needed to show specific components
-    components: {
-      mainModal: { visible: false },
-      loginForm: { visible: false },
-      registerForm: { visible: false }
-    }
+    this.state = {
+      user: null,
+      authorizationToken: this.cookies.get("authorizationToken"),
+
+      // This should house any data needed to show specific components
+      components: {
+        mainModal: { visible: false },
+        loginForm: { visible: false },
+        registerForm: { visible: false }
+      }
+    };
+  }
+
+  /**
+   * Set the current user after the component mounts since the authorization token should be set by then.
+   */
+  componentDidMount = () => {
+    this.setCurrentUser();
+  };
+
+  /**
+   * Set the authorization token value and store it in a cookie.
+   *
+   * @param {String} token The token value
+   */
+  setAuthorizationToken = token => {
+    return new Promise(resolve => {
+      this.cookies.set("authorizationToken", token, { path: "/" });
+      this.setState({ authorizationToken: token }, resolve);
+    });
+  };
+
+  /**
+   * Send a request to the server to get the current user's data (based on the authorization token)
+   * and store that in the component state.
+   */
+  setCurrentUser = () => {
+    return sendRequest(
+      RequestType.GET,
+      "users/current",
+      this.state.authorizationToken
+    )
+      .then(
+        response =>
+          new Promise(resolve =>
+            this.setState({ user: response.data }, resolve)
+          )
+      )
+      .catch(
+        () => new Promise(resolve => this.setState({ user: null }, resolve))
+      );
+  };
+
+  /**
+   * Logout the current user by removing the auth token cookie and resetting the state.
+   */
+  logoutCurrentUser = () => {
+    this.cookies.remove("authorizationToken");
+    this.setState({
+      user: null,
+      authorizationToken: null
+    });
   };
 
   /**
@@ -67,7 +126,10 @@ export default class AppContainer extends React.Component {
   functions = {
     toggleMainModal: this.toggleMainModal,
     onClickLogin: this.onClickLogin,
-    onClickRegister: this.onClickRegister
+    onClickRegister: this.onClickRegister,
+    setAuthorizationToken: this.setAuthorizationToken,
+    setCurrentUser: this.setCurrentUser,
+    logoutCurrentUser: this.logoutCurrentUser
   };
 
   /**
@@ -77,6 +139,7 @@ export default class AppContainer extends React.Component {
     return (
       <App
         user={this.state.user}
+        authorizationToken={this.state.authorizationToken}
         functions={this.functions}
         components={this.state.components}
         isMainModalActive={this.state.isMainModalActive}

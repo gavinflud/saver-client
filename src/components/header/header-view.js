@@ -24,7 +24,12 @@ const loginRegisterComponent = props => (
  * @param {Object} props Properties passed from the calling component
  */
 const userMenuComponent = props => (
-  <UserMenu rootClass="level-right" itemClass="level-item" user={props.user} />
+  <UserMenu
+    rootClass="level-right"
+    itemClass="level-item"
+    user={props.user}
+    logoutCurrentUser={props.functions.logoutCurrentUser}
+  />
 );
 
 /**

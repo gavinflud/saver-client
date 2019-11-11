@@ -1,1 +1,1 @@
-export { default } from "./user-menu-view";
+export { default } from "./user-menu-container";
