@@ -1,0 +1,13 @@
+.gf-widget-content {
+  border: 1px solid hsl(0, 0%, 90%);
+  border-radius: 4px;
+  padding: 6px 0;
+}
+
+.gf-widget-toolbar {
+  padding: 0 6px 6px;
+}
+
+.gf-widget-toolbar.level {
+  margin-bottom: 0 !important;
+}

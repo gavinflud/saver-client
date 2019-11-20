@@ -2,3 +2,7 @@
   border-bottom: 1px solid hsl(0, 0%, 96%);
   padding: 1.5em !important;
 }
+
+.gf-main-container .columns {
+  margin-top: 0;
+}
