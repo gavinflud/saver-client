@@ -1,7 +1,6 @@
 import React from "react";
 import App from "./app-view";
 import Cookies from "universal-cookie";
-import moment from "moment";
 import { sendRequest, RequestType } from "../../utils/";
 import "flatpickr/dist/themes/light.css";
 

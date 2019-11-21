@@ -1,6 +1,5 @@
 import React from "react";
 import Header from "../header/";
-import MainModal from "../main-modal/";
 import Sidebar from "../sidebar/";
 import MainContent from "../main-content/main-content-view";
 import "./app.css";
@@ -12,14 +11,6 @@ import "bulma/css/bulma.css";
  * @param {Object} props Properties passed from the calling component
  */
 const App = props => {
-  const mainModalFunctions = {
-    handleLogin: props.functions.handleLogin,
-    handleRegister: props.functions.handleRegister,
-    toggleMainModal: props.functions.toggleMainModal,
-    setAuthorizationToken: props.functions.setAuthorizationToken,
-    setCurrentUser: props.functions.setCurrentUser
-  };
-
   const sidebarFunctions = {
     setTargetDate: props.functions.setTargetDate
   };
@@ -46,14 +37,6 @@ const App = props => {
           ></MainContent>
         </div>
       </div>
-
-      <MainModal
-        loginForm={props.components.loginForm}
-        registerForm={props.components.registerForm}
-        isActive={props.components.mainModal.visible}
-        functions={mainModalFunctions}
-        authorizationToken={props.authorizationToken}
-      />
     </div>
   );
 };

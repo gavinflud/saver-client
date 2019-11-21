@@ -13,8 +13,8 @@ const loginRegisterComponent = props => (
   <LoginRegisterButtons
     rootClass="level-right"
     buttonClass="level-item"
-    onClickLogin={props.functions.onClickLogin}
-    onClickRegister={props.functions.onClickRegister}
+    authenticationToken={props.authenticationToken}
+    functions={props.functions}
   />
 );
 

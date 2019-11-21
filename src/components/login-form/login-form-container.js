@@ -20,16 +20,6 @@ class LoginFormContainer extends React.Component {
   }
 
   /**
-   * Close the form.
-   */
-  closeForm = event => {
-    if (event) {
-      event.preventDefault();
-    }
-    this.props.functions.toggleMainModal();
-  };
-
-  /**
    * Send the login request and store the authentication token if successful. Store the user returned.
    */
   submitForm = event => {
@@ -42,7 +32,7 @@ class LoginFormContainer extends React.Component {
         );
       })
       .then(() => this.props.functions.setCurrentUser())
-      .then(() => this.closeForm());
+      .then(() => this.props.closeForm());
   };
 
   /**
