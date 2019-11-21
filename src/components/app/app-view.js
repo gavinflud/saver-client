@@ -30,11 +30,12 @@ const App = props => {
             authorizationToken={props.authorizationToken}
             targetDate={props.targetDate}
             functions={sidebarFunctions}
-          ></Sidebar>
+            user={props.user}
+          />
           <MainContent
             className="column"
             authorizationToken={props.authorizationToken}
-          ></MainContent>
+          />
         </div>
       </div>
     </div>
