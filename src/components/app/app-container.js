@@ -1,7 +1,9 @@
 import React from "react";
 import App from "./app-view";
 import Cookies from "universal-cookie";
+import moment from "moment";
 import { sendRequest, RequestType } from "../../utils/";
+import "flatpickr/dist/themes/light.css";
 
 /**
  * Container for the app view.
@@ -14,6 +16,8 @@ export default class AppContainer extends React.Component {
     this.state = {
       user: null,
       authorizationToken: this.cookies.get("authorizationToken"),
+
+      targetDate: new Date(),
 
       // This should house any data needed to show specific components
       components: {
@@ -79,6 +83,13 @@ export default class AppContainer extends React.Component {
   };
 
   /**
+   * Set the target date.
+   */
+  setTargetDate = date => {
+    return new Promise(resolve => this.setState({ targetDate: date }, resolve));
+  };
+
+  /**
    * Show or hide the main modal.
    */
   toggleMainModal = () => {
@@ -132,7 +143,8 @@ export default class AppContainer extends React.Component {
     onClickRegister: this.onClickRegister,
     setAuthorizationToken: this.setAuthorizationToken,
     setCurrentUser: this.setCurrentUser,
-    logoutCurrentUser: this.logoutCurrentUser
+    logoutCurrentUser: this.logoutCurrentUser,
+    setTargetDate: this.setTargetDate
   };
 
   /**
@@ -143,6 +155,7 @@ export default class AppContainer extends React.Component {
       <App
         user={this.state.user}
         authorizationToken={this.state.authorizationToken}
+        targetDate={this.state.targetDate}
         functions={this.functions}
         components={this.state.components}
         isMainModalActive={this.state.isMainModalActive}

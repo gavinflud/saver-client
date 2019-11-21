@@ -11,3 +11,7 @@
 .gf-widget-toolbar.level {
   margin-bottom: 0 !important;
 }
+
+.gf-widget {
+  margin-top: 2em;
+}

@@ -20,6 +20,10 @@ const App = props => {
     setCurrentUser: props.functions.setCurrentUser
   };
 
+  const sidebarFunctions = {
+    setTargetDate: props.functions.setTargetDate
+  };
+
   return (
     <div className="gf-app">
       <div className="gf-header-container section">
@@ -33,6 +37,8 @@ const App = props => {
           <Sidebar
             className="is-one-quarter column"
             authorizationToken={props.authorizationToken}
+            targetDate={props.targetDate}
+            functions={sidebarFunctions}
           ></Sidebar>
           <MainContent
             className="column"

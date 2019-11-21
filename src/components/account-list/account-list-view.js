@@ -8,7 +8,9 @@ import "./account-list-view.css";
  * @param {Object} props Properties passed from the calling component
  */
 const AccountList = props => {
-  const rows = props.accounts.map(account => <AccountRow account={account} />);
+  const rows = props.accounts.map(account => (
+    <AccountRow key={account.id} account={account} />
+  ));
   return (
     <div className="gf-widget">
       <div className="gf-widget-toolbar level">

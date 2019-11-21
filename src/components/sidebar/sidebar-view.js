@@ -1,5 +1,6 @@
 import React from "react";
 import AccountList from "../account-list/";
+import DatePicker from "../date-picker/";
 import "./sidebar-view.css";
 
 /**
@@ -10,6 +11,10 @@ import "./sidebar-view.css";
 const Sidebar = props => {
   return (
     <div className={props.className}>
+      <DatePicker
+        date={props.targetDate}
+        handleDateChange={props.functions.setTargetDate}
+      />
       <AccountList authorizationToken={props.authorizationToken} />
     </div>
   );
