@@ -6,3 +6,7 @@
 .gf-main-container .columns {
   margin-top: 0;
 }
+
+.gf-select {
+  width: 100%;
+}

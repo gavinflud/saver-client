@@ -7,7 +7,15 @@ import { sendRequest, RequestType } from "../../utils";
  */
 class AccountListContainer extends React.Component {
   state = {
-    accounts: []
+    accounts: [],
+    account: {
+      accountType: {
+        id: null
+      },
+      name: ""
+    },
+    accountTypes: [],
+    isAccountFormVisible: false
   };
 
   /**
@@ -15,6 +23,7 @@ class AccountListContainer extends React.Component {
    */
   componentDidMount = () => {
     this.setAccounts();
+    this.setAccountTypes();
   };
 
   /**
@@ -34,13 +43,108 @@ class AccountListContainer extends React.Component {
   };
 
   /**
+   * Get the available account types.
+   */
+  setAccountTypes = () => {
+    return sendRequest(
+      RequestType.GET,
+      "types/account",
+      this.props.authorizationToken
+    ).then(
+      response =>
+        new Promise(resolve =>
+          this.setState({ accountTypes: response.data }, resolve)
+        )
+    );
+  };
+
+  /**
+   * Show the account form.
+   */
+  showAccountForm = () => {
+    this.setState({ isAccountFormVisible: true });
+  };
+
+  /**
+   * Hide the account form.
+   */
+  hideAccountForm = () => {
+    this.setState({ isAccountFormVisible: false });
+  };
+
+  /**
+   * Handle any change to any of the form inputs and update the state accordingly.
+   */
+  handleInputChange = event => {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+
+    this.setState({
+      account: {
+        ...this.state.account,
+        [name]: value
+      }
+    });
+  };
+
+  /**
+   * Handle a change to the account type select input and update the state.
+   */
+  handleAccountTypeChange = event => {
+    const target = event.target;
+    const value = target.value;
+
+    this.setState({
+      account: {
+        ...this.state.account,
+        accountType: {
+          ...this.state.account.accountType,
+          id: value
+        }
+      }
+    });
+  };
+
+  /**
+   * Submit the form to create a new account.
+   */
+  submitForm = event => {
+    event.preventDefault();
+
+    sendRequest(
+      RequestType.POST,
+      "accounts",
+      this.props.authorizationToken,
+      this.state.account
+    ).then(response => {
+      const accounts = this.state.accounts;
+      accounts.push(response.data);
+      this.setState({ accounts: accounts });
+      this.hideAccountForm();
+    });
+  };
+
+  functions = {
+    showForm: this.showAccountForm,
+    closeForm: this.hideAccountForm,
+    submitForm: this.submitForm,
+    handleInputChange: this.handleInputChange,
+    handleAccountTypeChange: this.handleAccountTypeChange
+  };
+
+  /**
    * Render the view.
    */
   render() {
     return (
       <AccountList
         accounts={this.state.accounts}
+        accountTypes={this.state.accountTypes}
+        account={this.state.account}
         className={this.props.className}
+        isAccountFormVisible={this.state.isAccountFormVisible}
+        functions={this.functions}
       />
     );
   }
