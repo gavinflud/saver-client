@@ -6,7 +6,12 @@ import React from "react";
  * @param {Object} props Properties passed from the calling component
  */
 const AccountRow = props => {
-  return <li>{props.account.name}</li>;
+  const rowClass = props.isSelected ? "gf-active" : "";
+  return (
+    <li onClick={props.onClickRow} className={rowClass}>
+      {props.account.name}
+    </li>
+  );
 };
 
 export default AccountRow;

@@ -59,10 +59,36 @@ class AccountListContainer extends React.Component {
   };
 
   /**
-   * Show the account form.
+   * Select an account when clicking its row.
    */
-  showAccountForm = () => {
-    this.setState({ isAccountFormVisible: true });
+  onClickRow = account => {
+    this.setState({ account: account });
+  };
+
+  /**
+   * Check if a row's account is selected.
+   */
+  isAccountSelected = account => {
+    return (
+      account !== null &&
+      account !== undefined &&
+      account.id === this.state.account.id
+    );
+  };
+
+  /**
+   * Show the new account form.
+   */
+  showNewAccountForm = () => {
+    this.setState({
+      account: {
+        accountType: {
+          id: null
+        },
+        name: ""
+      },
+      isAccountFormVisible: true
+    });
   };
 
   /**
@@ -126,7 +152,9 @@ class AccountListContainer extends React.Component {
   };
 
   functions = {
-    showForm: this.showAccountForm,
+    onClickRow: this.onClickRow,
+    isAccountSelected: this.isAccountSelected,
+    showNewAccountForm: this.showNewAccountForm,
     closeForm: this.hideAccountForm,
     submitForm: this.submitForm,
     handleInputChange: this.handleInputChange,

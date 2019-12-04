@@ -1,5 +1,5 @@
 import React from "react";
-import AccountRow from "./account-list-row-view";
+import AccountRow from "./account-row/";
 import Modal from "../modal";
 import "./account-list-view.css";
 
@@ -79,7 +79,12 @@ const getAccountForm = props => {
  */
 const AccountList = props => {
   const rows = props.accounts.map(account => (
-    <AccountRow key={account.id} account={account} />
+    <AccountRow
+      key={account.id}
+      account={account}
+      onClickRow={props.functions.onClickRow}
+      isSelected={props.functions.isAccountSelected}
+    />
   ));
 
   const accountForm = getAccountForm(props);
@@ -90,7 +95,7 @@ const AccountList = props => {
         <div className="level-right">
           <span
             className="button is-primary is-small level-item"
-            onClick={props.functions.showForm}
+            onClick={props.functions.showNewAccountForm}
           >
             Add
           </span>
