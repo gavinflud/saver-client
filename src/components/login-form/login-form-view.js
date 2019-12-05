@@ -33,6 +33,12 @@ const LoginForm = props => {
           </div>
         </div>
 
+        {props.errorMessage !== "" ? (
+          <div class="notification is-danger">{props.errorMessage}</div>
+        ) : (
+          ""
+        )}
+
         <div className="field is-grouped">
           <div className="control">
             <button

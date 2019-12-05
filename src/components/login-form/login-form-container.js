@@ -14,8 +14,11 @@ class LoginFormContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
-      password: ""
+      user: {
+        username: "",
+        password: ""
+      },
+      errorMessage: ""
     };
   }
 
@@ -25,14 +28,24 @@ class LoginFormContainer extends React.Component {
   submitForm = event => {
     event.preventDefault();
 
-    sendRequest(RequestType.POST, "users/login", null, this.state)
+    sendRequest(RequestType.POST, "users/login", null, this.state.user)
       .then(response => {
         this.props.functions.setAuthorizationToken(
           response.headers.authorization
         );
       })
-      .then(() => this.props.functions.setCurrentUser())
-      .then(() => this.props.closeForm());
+      .then(() => {
+        this.props.functions.setCurrentUser();
+        this.props.errorMessage = "";
+        this.props.closeForm();
+      })
+      .catch(error => {
+        if (error.response === undefined) {
+          this.setState({ errorMessage: "Server error" });
+        } else if (error.response.status === 403) {
+          this.setState({ errorMessage: "Invalid username or password" });
+        }
+      });
   };
 
   /**
@@ -44,13 +57,16 @@ class LoginFormContainer extends React.Component {
     const name = target.name;
 
     this.setState({
-      [name]: value
+      user: {
+        ...this.state.user,
+        [name]: value
+      }
     });
   };
 
   // Functions needed by the login form view
   functions = {
-    closeForm: this.closeForm,
+    closeForm: this.props.closeForm,
     submitForm: this.submitForm,
     handleInputChange: this.handleInputChange
   };
@@ -59,7 +75,13 @@ class LoginFormContainer extends React.Component {
    * Render.
    */
   render() {
-    return <LoginForm user={this.state} functions={this.functions} />;
+    return (
+      <LoginForm
+        user={this.state.user}
+        errorMessage={this.state.errorMessage}
+        functions={this.functions}
+      />
+    );
   }
 }
 
