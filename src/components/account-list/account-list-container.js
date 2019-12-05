@@ -14,7 +14,6 @@ class AccountListContainer extends React.Component {
       },
       name: ""
     },
-    accountTypes: [],
     isAccountFormVisible: false
   };
 
@@ -23,7 +22,6 @@ class AccountListContainer extends React.Component {
    */
   componentDidMount = () => {
     this.setAccounts();
-    this.setAccountTypes();
   };
 
   /**
@@ -38,22 +36,6 @@ class AccountListContainer extends React.Component {
       response =>
         new Promise(resolve =>
           this.setState({ accounts: response.data.content }, resolve)
-        )
-    );
-  };
-
-  /**
-   * Get the available account types.
-   */
-  setAccountTypes = () => {
-    return sendRequest(
-      RequestType.GET,
-      "types/account",
-      this.props.authorizationToken
-    ).then(
-      response =>
-        new Promise(resolve =>
-          this.setState({ accountTypes: response.data }, resolve)
         )
     );
   };
@@ -173,6 +155,7 @@ class AccountListContainer extends React.Component {
         className={this.props.className}
         isAccountFormVisible={this.state.isAccountFormVisible}
         functions={this.functions}
+        authorizationToken={this.props.authorizationToken}
       />
     );
   }

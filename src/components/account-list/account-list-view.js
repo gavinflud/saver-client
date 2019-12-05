@@ -1,5 +1,6 @@
 import React from "react";
 import AccountRow from "./account-row/";
+import AccountForm from "../account-form/";
 import Modal from "../modal";
 import "./account-list-view.css";
 
@@ -9,64 +10,14 @@ import "./account-list-view.css";
  * @param {Object} props Properties passed from the calling component
  */
 const getAccountForm = props => {
-  const accountTypes = props.accountTypes.map(accountType => (
-    <option value={accountType.id}>{accountType.name}</option>
-  ));
-
   if (props.isAccountFormVisible) {
     return (
       <Modal title="New Account" onClickClose={props.functions.closeForm}>
-        <div className="gf-account-form">
-          <form>
-            <div className="field">
-              <label className="label">Name</label>
-              <div className="control">
-                <input
-                  className="input"
-                  type="text"
-                  name="name"
-                  value={props.account.name}
-                  onChange={props.functions.handleInputChange}
-                />
-              </div>
-            </div>
-
-            <div className="field">
-              <label className="label">Type</label>
-              <div className="control">
-                <div className="select gf-select">
-                  <select
-                    name="accountType"
-                    className="gf-select"
-                    value={props.account.accountType.id}
-                    onChange={props.functions.handleAccountTypeChange}
-                  >
-                    {accountTypes}
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            <div className="field is-grouped">
-              <div className="control">
-                <button
-                  className="button is-link"
-                  onClick={props.functions.submitForm}
-                >
-                  Create
-                </button>
-              </div>
-              <div className="control">
-                <button
-                  className="button is-link is-light"
-                  onClick={props.functions.closeForm}
-                >
-                  Cancel
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
+        <AccountForm
+          functions={props.functions}
+          account={props.account}
+          authorizationToken={props.authorizationToken}
+        />
       </Modal>
     );
   }
