@@ -11,8 +11,12 @@ import "./account-list-view.css";
  */
 const getAccountForm = props => {
   if (props.isAccountFormVisible) {
+    const title =
+      props.account.id !== null && props.account.id !== undefined
+        ? "Update Account"
+        : "New Account";
     return (
-      <Modal title="New Account" onClickClose={props.functions.closeForm}>
+      <Modal title={title} onClickClose={props.functions.closeForm}>
         <AccountForm
           functions={props.functions}
           account={props.account}
@@ -38,7 +42,11 @@ const AccountList = props => {
     />
   ));
 
+  const isEditButtonVisible =
+    props.account.id !== null && props.account.id !== undefined;
+
   const accountForm = getAccountForm(props);
+
   return (
     <div className="gf-widget">
       <div className="gf-widget-toolbar level">
@@ -50,6 +58,16 @@ const AccountList = props => {
           >
             Add
           </span>
+          {isEditButtonVisible ? (
+            <span
+              className="button is-primary is-small level-item"
+              onClick={props.functions.showEditAccountForm}
+            >
+              Edit
+            </span>
+          ) : (
+            ""
+          )}
         </div>
       </div>
       <div className="gf-widget-content gf-account-list">

@@ -7,8 +7,12 @@ import React from "react";
  */
 const AccountForm = props => {
   const accountTypes = props.accountTypes.map(accountType => (
-    <option value={accountType.id}>{accountType.name}</option>
+    <option key={accountType.id} value={accountType.id}>
+      {accountType.name}
+    </option>
   ));
+
+  const isEdit = props.account.id !== null && props.account.id !== undefined;
 
   return (
     <div className="gf-account-form">
@@ -48,7 +52,7 @@ const AccountForm = props => {
               className="button is-link"
               onClick={props.functions.submitForm}
             >
-              Create
+              {isEdit ? "Update" : "Create"}
             </button>
           </div>
           <div className="control">

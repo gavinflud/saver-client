@@ -44,7 +44,18 @@ class AccountListContainer extends React.Component {
    * Select an account when clicking its row.
    */
   onClickRow = account => {
-    this.setState({ account: account });
+    if (this.state.account === account) {
+      this.setState({
+        account: {
+          accountType: {
+            id: null
+          },
+          name: ""
+        }
+      });
+    } else {
+      this.setState({ account: account });
+    }
   };
 
   /**
@@ -71,6 +82,13 @@ class AccountListContainer extends React.Component {
       },
       isAccountFormVisible: true
     });
+  };
+
+  /**
+   * Show the edit account form.
+   */
+  showEditAccountForm = () => {
+    this.setState({ isAccountFormVisible: true });
   };
 
   /**
@@ -115,11 +133,22 @@ class AccountListContainer extends React.Component {
   };
 
   /**
-   * Submit the form to create a new account.
+   * Submit the form to create or update an account.
    */
   submitForm = event => {
     event.preventDefault();
 
+    if (this.state.account.id !== null && this.state.account.id !== undefined) {
+      this.updateAccount();
+    } else {
+      this.createNewAccount();
+    }
+  };
+
+  /**
+   * Create a new account.
+   */
+  createNewAccount = () => {
     sendRequest(
       RequestType.POST,
       "accounts",
@@ -133,10 +162,26 @@ class AccountListContainer extends React.Component {
     });
   };
 
+  /**
+   * Update an existing account.
+   */
+  updateAccount = () => {
+    sendRequest(
+      RequestType.PUT,
+      "accounts/" + this.state.account.id,
+      this.props.authorizationToken,
+      this.state.account
+    ).then(() => {
+      this.setAccounts();
+      this.hideAccountForm();
+    });
+  };
+
   functions = {
     onClickRow: this.onClickRow,
     isAccountSelected: this.isAccountSelected,
     showNewAccountForm: this.showNewAccountForm,
+    showEditAccountForm: this.showEditAccountForm,
     closeForm: this.hideAccountForm,
     submitForm: this.submitForm,
     handleInputChange: this.handleInputChange,
