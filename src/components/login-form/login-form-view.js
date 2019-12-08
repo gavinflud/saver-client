@@ -34,7 +34,7 @@ const LoginForm = props => {
         </div>
 
         {props.errorMessage !== "" ? (
-          <div class="notification is-danger">{props.errorMessage}</div>
+          <div className="notification is-danger">{props.errorMessage}</div>
         ) : (
           ""
         )}

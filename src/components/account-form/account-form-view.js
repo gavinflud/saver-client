@@ -35,10 +35,10 @@ const AccountForm = props => {
           <div className="control">
             <div className="select gf-select">
               <select
-                name="accountType"
+                name="accountTypeId"
                 className="gf-select"
-                value={props.account.accountType.id}
-                onChange={props.functions.handleAccountTypeChange}
+                value={props.account.accountTypeId}
+                onChange={props.functions.handleInputChange}
               >
                 {accountTypes}
               </select>

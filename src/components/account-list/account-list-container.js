@@ -9,10 +9,8 @@ class AccountListContainer extends React.Component {
   state = {
     accounts: [],
     account: {
-      accountType: {
-        id: null
-      },
-      name: ""
+      name: "",
+      accountTypeId: ""
     },
     isAccountFormVisible: false
   };
@@ -44,17 +42,21 @@ class AccountListContainer extends React.Component {
    * Select an account when clicking its row.
    */
   onClickRow = account => {
-    if (this.state.account === account) {
+    if (this.state.account.id === account.id) {
       this.setState({
         account: {
-          accountType: {
-            id: null
-          },
-          name: ""
+          name: "",
+          accountTypeId: ""
         }
       });
     } else {
-      this.setState({ account: account });
+      this.setState({
+        account: {
+          id: account.id,
+          name: account.name,
+          accountTypeId: account.accountType.id
+        }
+      });
     }
   };
 
@@ -75,10 +77,8 @@ class AccountListContainer extends React.Component {
   showNewAccountForm = () => {
     this.setState({
       account: {
-        accountType: {
-          id: null
-        },
-        name: ""
+        name: "",
+        accountTypeId: ""
       },
       isAccountFormVisible: true
     });
@@ -110,24 +110,6 @@ class AccountListContainer extends React.Component {
       account: {
         ...this.state.account,
         [name]: value
-      }
-    });
-  };
-
-  /**
-   * Handle a change to the account type select input and update the state.
-   */
-  handleAccountTypeChange = event => {
-    const target = event.target;
-    const value = target.value;
-
-    this.setState({
-      account: {
-        ...this.state.account,
-        accountType: {
-          ...this.state.account.accountType,
-          id: value
-        }
       }
     });
   };
@@ -184,8 +166,7 @@ class AccountListContainer extends React.Component {
     showEditAccountForm: this.showEditAccountForm,
     closeForm: this.hideAccountForm,
     submitForm: this.submitForm,
-    handleInputChange: this.handleInputChange,
-    handleAccountTypeChange: this.handleAccountTypeChange
+    handleInputChange: this.handleInputChange
   };
 
   /**

@@ -20,13 +20,13 @@ class AccountFormContainer extends React.Component {
   setAccountTypes = () => {
     return sendRequest(
       RequestType.GET,
-      "types/account",
+      "accounttypes",
       this.props.authorizationToken
     ).then(
       response =>
-        new Promise(resolve =>
-          this.setState({ accountTypes: response.data }, resolve)
-        )
+        new Promise(resolve => {
+          this.setState({ accountTypes: response.data }, resolve);
+        })
     );
   };
 
