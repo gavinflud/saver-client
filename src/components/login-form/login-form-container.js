@@ -40,9 +40,9 @@ class LoginFormContainer extends React.Component {
         this.props.closeForm();
       })
       .catch(error => {
-        if (error.response === undefined) {
+        if (error.message === "Network Error") {
           this.setState({ errorMessage: "Server error" });
-        } else if (error.response.status === 403) {
+        } else if (error.response && error.response.status === 403) {
           this.setState({ errorMessage: "Invalid username or password" });
         }
       });
