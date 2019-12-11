@@ -16,7 +16,10 @@ const getSidebarContent = props => {
         date={props.targetDate}
         handleDateChange={props.functions.setTargetDate}
       />
-      <AccountList authorizationToken={props.authorizationToken} />
+      <AccountList
+        authorizationToken={props.authorizationToken}
+        setSelectedAccount={props.functions.setSelectedAccount}
+      />
     </div>
   ) : (
     ""

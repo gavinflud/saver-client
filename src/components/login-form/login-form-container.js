@@ -28,7 +28,7 @@ class LoginFormContainer extends React.Component {
   submitForm = event => {
     event.preventDefault();
 
-    sendRequest(RequestType.POST, "users/login", null, this.state.user)
+    sendRequest(RequestType.POST, "users/login", null, null, this.state.user)
       .then(response => {
         this.props.functions.setAuthorizationToken(
           response.headers.authorization

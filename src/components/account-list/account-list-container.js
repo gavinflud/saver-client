@@ -49,6 +49,7 @@ class AccountListContainer extends React.Component {
           accountTypeId: ""
         }
       });
+      this.props.setSelectedAccount(null);
     } else {
       this.setState({
         account: {
@@ -57,6 +58,7 @@ class AccountListContainer extends React.Component {
           accountTypeId: account.accountType.id
         }
       });
+      this.props.setSelectedAccount(account);
     }
   };
 
@@ -135,6 +137,7 @@ class AccountListContainer extends React.Component {
       RequestType.POST,
       "accounts",
       this.props.authorizationToken,
+      null,
       this.state.account
     ).then(response => {
       const accounts = this.state.accounts;
@@ -152,6 +155,7 @@ class AccountListContainer extends React.Component {
       RequestType.PUT,
       "accounts/" + this.state.account.id,
       this.props.authorizationToken,
+      null,
       this.state.account
     ).then(() => {
       this.setAccounts();

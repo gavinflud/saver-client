@@ -18,6 +18,8 @@ export default class AppContainer extends React.Component {
 
       targetDate: new Date(),
 
+      selectedAccount: null,
+
       // This should house any data needed to show specific components
       components: {
         mainModal: { visible: false },
@@ -135,6 +137,15 @@ export default class AppContainer extends React.Component {
     );
   };
 
+  /**
+   * Set the selected account.
+   *
+   * @param {Object} account The newly selected account
+   */
+  setSelectedAccount = account => {
+    this.setState({ selectedAccount: account });
+  };
+
   // Object housing functions that need to be called from other components
   functions = {
     toggleMainModal: this.toggleMainModal,
@@ -143,7 +154,8 @@ export default class AppContainer extends React.Component {
     setAuthorizationToken: this.setAuthorizationToken,
     setCurrentUser: this.setCurrentUser,
     logoutCurrentUser: this.logoutCurrentUser,
-    setTargetDate: this.setTargetDate
+    setTargetDate: this.setTargetDate,
+    setSelectedAccount: this.setSelectedAccount
   };
 
   /**
@@ -155,6 +167,7 @@ export default class AppContainer extends React.Component {
         user={this.state.user}
         authorizationToken={this.state.authorizationToken}
         targetDate={this.state.targetDate}
+        selectedAccount={this.state.selectedAccount}
         functions={this.functions}
         components={this.state.components}
         isMainModalActive={this.state.isMainModalActive}

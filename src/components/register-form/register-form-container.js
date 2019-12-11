@@ -48,7 +48,7 @@ class RegisterFormContainer extends React.Component {
       }
     };
 
-    sendRequest(RequestType.POST, "users", null, user)
+    sendRequest(RequestType.POST, "users", null, null, user)
       .then(response => console.log(response))
       .then(() => this.props.closeForm());
   };

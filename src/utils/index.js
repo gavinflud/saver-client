@@ -19,9 +19,10 @@ export const RequestType = {
  * @param {String} type The HTTP request type
  * @param {String} path The path to append to the URL
  * @param {String} token The authentication token (optional)
+ * @param {Object} params The request parameters (optional)
  * @param {Object} body The request body (optional)
  */
-export const sendRequest = (type, path, token, body) => {
+export const sendRequest = (type, path, token, params, body) => {
   const request = {
     method: type,
     url: URL + path
@@ -29,6 +30,10 @@ export const sendRequest = (type, path, token, body) => {
 
   if (token) {
     request["headers"] = { Authorization: token };
+  }
+
+  if (params) {
+    request["params"] = params;
   }
 
   if (body) {

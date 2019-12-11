@@ -12,7 +12,8 @@ import "bulma/css/bulma.css";
  */
 const App = props => {
   const sidebarFunctions = {
-    setTargetDate: props.functions.setTargetDate
+    setTargetDate: props.functions.setTargetDate,
+    setSelectedAccount: props.functions.setSelectedAccount
   };
 
   return (
@@ -35,6 +36,7 @@ const App = props => {
           <MainContent
             className="column"
             authorizationToken={props.authorizationToken}
+            selectedAccount={props.selectedAccount}
           />
         </div>
       </div>
