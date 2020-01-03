@@ -1,5 +1,6 @@
 import React from "react";
 import TransactionList from "./transaction-list-view";
+import TransactionBar from "./transaction-bar/";
 import { sendRequest, RequestType } from "../../utils";
 
 /**
@@ -37,11 +38,14 @@ class TransactionListContainer extends React.Component {
    */
   render() {
     return (
-      <TransactionList
-        transactions={this.state.transactions}
-        pageNumber={this.state.pageNumber}
-        totalPages={this.state.totalPages}
-      />
+      <div>
+        <TransactionBar />
+        <TransactionList
+          transactions={this.state.transactions}
+          pageNumber={this.state.pageNumber}
+          totalPages={this.state.totalPages}
+        />
+      </div>
     );
   }
 }
