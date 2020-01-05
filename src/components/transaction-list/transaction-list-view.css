@@ -27,3 +27,36 @@
 .gf-negative-amount {
   color: hsl(348, 100%, 61%);
 }
+
+.gf-transaction-navigation-container {
+  display: flex;
+  justify-content: center;
+  padding: 8px 0;
+  border-top: 1px solid hsl(0, 0%, 98%);
+}
+
+.gf-transaction-navigation {
+  display: flex;
+  align-items: center;
+}
+
+.gf-transaction-navigation i {
+  cursor: pointer;
+}
+
+.gf-transaction-navigation i:hover {
+  color: #00c4a7 !important;
+}
+
+.gf-transaction-navigation i.gf-page-button-disabled {
+  color: hsl(0, 0%, 86%);
+  cursor: not-allowed;
+}
+
+.gf-transaction-navigation i.gf-page-button-disabled:hover {
+  color: hsl(0, 0%, 86%) !important;
+}
+
+.gf-transaction-pages {
+  padding: 0 8px;
+}

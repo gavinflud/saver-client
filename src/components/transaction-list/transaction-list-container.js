@@ -17,6 +17,12 @@ class TransactionListContainer extends React.Component {
     this.setTransactions();
   };
 
+  componentDidUpdate = previousProps => {
+    if (previousProps.selectedAccount !== this.props.selectedAccount) {
+      this.setTransactions();
+    }
+  };
+
   /**
    * Make a call to get the transactions for the selected account.
    */
@@ -26,11 +32,57 @@ class TransactionListContainer extends React.Component {
         RequestType.GET,
         "transactions",
         this.props.authorizationToken,
-        { accountId: this.props.selectedAccount.id }
+        {
+          accountId: this.props.selectedAccount.id,
+          page: this.state.pageNumber,
+          size: 10
+        }
       ).then(response =>
-        this.setState({ transactions: response.data.content })
+        this.setState({
+          transactions: response.data.content,
+          pageNumber: response.data.number,
+          totalPages: response.data.totalPages
+        })
       );
     }
+  };
+
+  /**
+   * Navigate to the previous page
+   */
+  previousPage = () => {
+    if (this.canClickPreviousPage()) {
+      this.setState(
+        { pageNumber: this.state.pageNumber - 1 },
+        this.setTransactions
+      );
+    }
+  };
+
+  /**
+   * Navigate to the next page.
+   */
+  nextPage = () => {
+    if (this.canClickNextPage()) {
+      this.setState(
+        { pageNumber: this.state.pageNumber + 1 },
+        this.setTransactions
+      );
+    }
+  };
+
+  /**
+   * Return true if there is a previous page.
+   */
+  canClickPreviousPage = () => {
+    return this.state.pageNumber > 0;
+  };
+
+  /**
+   * Return true if there is a next page.
+   */
+  canClickNextPage = () => {
+    return this.state.pageNumber < this.state.totalPages - 1;
   };
 
   /**
@@ -42,8 +94,12 @@ class TransactionListContainer extends React.Component {
         <TransactionBar />
         <TransactionList
           transactions={this.state.transactions}
-          pageNumber={this.state.pageNumber}
+          pageNumber={this.state.pageNumber + 1}
           totalPages={this.state.totalPages}
+          canClickPreviousPage={this.canClickPreviousPage}
+          canClickNextPage={this.canClickNextPage}
+          previousPage={this.previousPage}
+          nextPage={this.nextPage}
         />
       </div>
     );
