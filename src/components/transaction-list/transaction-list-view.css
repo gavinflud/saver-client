@@ -1,0 +1,29 @@
+.gf-transaction-list {
+  border: 1px solid hsl(0, 0%, 90%);
+  border-radius: 4px;
+}
+
+.gf-transaction-list table {
+  width: 100%;
+}
+
+.gf-transaction-list table td,
+.gf-transaction-list table th {
+  padding: 12px;
+}
+
+.gf-transaction-list table thead tr {
+  background: hsl(0, 0%, 90%);
+}
+
+.gf-transaction-list table tbody tr:nth-child(odd) {
+  background: hsl(0, 0%, 98%);
+}
+
+.gf-positive-amount {
+  color: hsl(141, 71%, 48%);
+}
+
+.gf-negative-amount {
+  color: hsl(348, 100%, 61%);
+}
